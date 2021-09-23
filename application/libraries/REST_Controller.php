@@ -2229,6 +2229,7 @@ abstract class REST_Controller extends \CI_Controller {
             header('Access-Control-Allow-Origin: *');
             header('Access-Control-Allow-Headers: '.$allowed_headers);
             header('Access-Control-Allow-Methods: '.$allowed_methods);
+            header('Access-Control-Allow-Credentials: '.$allowed_credentials);
         }
         else
         {

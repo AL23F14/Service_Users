@@ -7,7 +7,7 @@ header('content-type: application/json; charset=utf-8');
 
 require APPPATH . 'libraries/REST_Controller.php';
      
-class Item extends REST_Controller {
+class Log extends REST_Controller {
     
 	  /**
      * Get All Data from this method.
@@ -27,9 +27,9 @@ class Item extends REST_Controller {
 	public function index_get($id = 0)
 	{
         if(!empty($id)){
-            $data = $this->db->get_where("usuarios", ['id_usuario' => $id])->row_array();
+            $data = $this->db->get_where("users", ['id_u' => $id])->row_array();
         }else{
-            $data = $this->db->get("usuarios")->result();
+            $data = $this->db->get("users")->result();
         }
      
         $this->response($data, REST_Controller::HTTP_OK);
@@ -44,7 +44,7 @@ class Item extends REST_Controller {
     {
         
         $input = $this->input->post();
-        $this->db->insert('usuarios',$input);
+        $this->db->insert('users',$input);
      
         $this->response($input, REST_Controller::HTTP_OK);
     } 
@@ -57,7 +57,7 @@ class Item extends REST_Controller {
     public function index_put($id)
     {
         $input = $this->put();
-        $this->db->update('usuarios', $input, array('id_usuario'=>$id));
+        $this->db->update('users', $input, array('id_u'=>$id));
      
         $this->response(['Item updated successfully.'], REST_Controller::HTTP_OK);
     }
@@ -69,21 +69,21 @@ class Item extends REST_Controller {
     */
     public function index_delete($id)
     {
-        $this->db->delete('usuarios', array('id_usuario'=>$id));
+        $this->db->delete('users', array('id_u'=>$id));
        
         $this->response(['Item deleted successfully.'], REST_Controller::HTTP_OK);
     }
 
     function insert()
     {
-        $this->form_validation->set_rules("nombre_usuario", "Nombre Usuario", "required");
-        $this->form_validation->set_rules("emai", "Email", "required");
+        $this->form_validation->set_rules("nombre_u", "Nombre usuario", "required");
+        $this->form_validation->set_rules("emai_u", "Email", "required");
         $array = array();
         if($this->form_validation->run())
         {
             $data = array(
-                'nombre_usuario' => trim($this->input->post('nombre_usuario')),
-                'email'  => trim($this->input->post('email'))
+                'nombre_u' => trim($this->input->post('nombre_u')),
+                'email_u'  => trim($this->input->post('email_u'))
             );
             $this->api_model->insert_api($data);
             $array = array(
@@ -94,8 +94,8 @@ class Item extends REST_Controller {
         {
             $array = array(
                 'error'    => true,
-                'nombre_usario_error' => form_error('nombre_usuario'),
-                'email_error' => form_error('email')
+                'nombre_u_error' => form_error('nombre_u'),
+                'email_u_error' => form_error('email_u')
             );
         }
         echo json_encode($array, true);
